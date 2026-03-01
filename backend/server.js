@@ -65,6 +65,72 @@ app.get("/api/produtos/:id", async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar produto" });
   }
 });
+// 🔒 ADMIN - listar TODOS produtos (ativos e inativos)
+app.get("/api/admin/produtos", exigirAdmin, async (req, res) => {
+  try {
+    const produtos = await prisma.produto.findMany({
+      orderBy: { id: "asc" },
+    });
+    res.json(produtos);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Erro ao buscar produtos (admin)" });
+  }
+});
+
+// 🔒 ADMIN - criar produto
+app.post("/api/admin/produtos", exigirAdmin, async (req, res) => {
+  try {
+    const { nome, marca, volume, preco, imagem, descricao, ativo } = req.body;
+
+    if (!nome || !marca || !volume) {
+      return res.status(400).json({ error: "nome, marca e volume são obrigatórios" });
+    }
+
+    const produto = await prisma.produto.create({
+      data: {
+        nome: String(nome),
+        marca: String(marca),
+        volume: String(volume),
+        preco: Number(preco) || 0,
+        imagem: String(imagem || "/assets/img/perfume1.jpg"),
+        descricao: String(descricao || ""),
+        ativo: ativo === undefined ? true : Boolean(ativo),
+      },
+    });
+
+    res.status(201).json(produto);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Erro ao criar produto" });
+  }
+});
+
+// 🔒 ADMIN - editar produto
+app.patch("/api/admin/produtos/:id", exigirAdmin, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const { nome, marca, volume, preco, imagem, descricao, ativo } = req.body;
+
+    const produto = await prisma.produto.update({
+      where: { id },
+      data: {
+        ...(nome !== undefined ? { nome: String(nome) } : {}),
+        ...(marca !== undefined ? { marca: String(marca) } : {}),
+        ...(volume !== undefined ? { volume: String(volume) } : {}),
+        ...(preco !== undefined ? { preco: Number(preco) } : {}),
+        ...(imagem !== undefined ? { imagem: String(imagem) } : {}),
+        ...(descricao !== undefined ? { descricao: String(descricao) } : {}),
+        ...(ativo !== undefined ? { ativo: Boolean(ativo) } : {}),
+      },
+    });
+
+    res.json(produto);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Erro ao atualizar produto" });
+  }
+});
 app.get("/api/pedidos", exigirAdmin, async (req, res) => {
   try {
     const { status } = req.query;
