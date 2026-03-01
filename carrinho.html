@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrinho | Loja de Perfumes</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="header header--lux">
+  <div class="container header__content header__content--lux">
+
+    <a class="logo logo--lux" href="index.html">
+      <img src="assets/logo.png" alt="Fábia D'Lux Importados">
+    </a>
+
+    <nav class="nav nav--lux">
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="carrinho.html">
+        Carrinho (<span id="cartCount">0</span>)
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+  <main class="container section">
+  <h1>Seu Carrinho</h1>
+
+  <!-- PAGAMENTO -->
+  <div class="cartBox">
+    <label class="muted" for="paymentSelect">Forma de pagamento</label>
+    <select id="paymentSelect" class="input">
+      <option value="Pix">Pix</option>
+      <option value="Cartão">Cartão</option>
+      <option value="À vista">À vista</option>
+    </select>
+  </div>
+
+  <!-- ITENS -->
+  <div id="cartItems" class="cartItems"></div>
+
+  <!-- TOTAL -->
+  <h2 id="total"></h2>
+
+  <!-- AÇÕES -->
+  <div class="cartActions">
+    <button class="btn btn--outline" id="clearCartBtn">Limpar carrinho</button>
+    <button class="btn" id="whatsappBtn">Finalizar no WhatsApp</button>
+  </div>
+</main>
+  <script src="js/shared.js"></script>
+  <script src="js/carrinho.js"></script>
+</body>
+</html>

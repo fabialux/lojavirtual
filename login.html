@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin | Fábia D'Lux</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="Fábia D'Lux Importados">
+      </a>
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="catalogo.html">Catálogo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <h1>Login do Admin</h1>
+    <p class="muted">Acesso restrito.</p>
+
+    <div class="cartBox" style="max-width:420px;">
+      <label class="muted" for="senha">Senha</label>
+      <input id="senha" class="input" type="password" placeholder="Digite a senha do admin" />
+      <button class="btn" id="loginBtn" style="margin-top:12px;">Entrar</button>
+      <p class="muted" id="msg" style="margin-top:10px;"></p>
+    </div>
+  </main>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

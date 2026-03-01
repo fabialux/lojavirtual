@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin | Fábia D'Lux</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    
+
+  <header class="header">
+    <button class="btn btn--outline btn--small" id="logoutBtn">Sair</button>
+    <div class="container header__content">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="Fábia D'Lux Importados">
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="carrinho.html">Carrinho (<span id="cartCount">0</span>)</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="adminTop">
+      <div>
+        <div class="adminFilters" id="adminFilters">
+  <button class="filterBtn filterBtn--active" data-filter="TODOS">Todos</button>
+  <button class="filterBtn" data-filter="NOVO">NOVO</button>
+  <button class="filterBtn" data-filter="PAGO">PAGO</button>
+  <button class="filterBtn" data-filter="ENVIADO">ENVIADO</button>
+  <button class="filterBtn" data-filter="CANCELADO">CANCELADO</button>
+</div>
+        <h1>Painel de Pedidos</h1>
+        <p class="muted">Aqui aparecem todos os pedidos feitos no site.</p>
+        <div class="adminStats" id="adminStats">
+  <div class="statCard">
+    <div class="muted">Pedidos NOVOS</div>
+    <div class="statValue" id="statNovos">—</div>
+  </div>
+
+  <div class="statCard">
+    <div class="muted">Pedidos hoje</div>
+    <div class="statValue" id="statHoje">—</div>
+  </div>
+
+  <div class="statCard">
+    <div class="muted">Total hoje</div>
+    <div class="statValue" id="statTotalHoje">—</div>
+  </div>
+
+  <div class="statCard">
+    <div class="muted">Total geral</div>
+    <div class="statValue" id="statTotalGeral">—</div>
+  </div>
+</div>
+      </div>
+
+      <button class="btn btn--small" id="reloadBtn">Atualizar</button>
+    </div>
+
+    <div class="adminCards" id="pedidosLista"></div>
+  </main>
+
+  <script src="js/shared.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
