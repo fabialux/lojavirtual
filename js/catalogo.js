@@ -23,7 +23,7 @@ async function carregarProdutos(){
 
       card.innerHTML = `
         <div class="card__img">
-          <img src="${API_URL}${produto.imagem}" alt="${produto.nome}">
+          <img src="${produto.imagem}" alt="${produto.nome}">
         </div>
 
         <div class="card__body">
