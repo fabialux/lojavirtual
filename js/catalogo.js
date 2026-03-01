@@ -1,6 +1,12 @@
 const API_URL = window.location.hostname.includes("github.io")
   ? "https://lojavirtual-production.up.railway.app"
   : "http://localhost:3000";
+
+// ✅ base correta para imagens no GitHub Pages
+const SITE_BASE = window.location.hostname.includes("github.io")
+  ? `https://${window.location.host}/lojavirtual`
+  : "";
+
 const grid = document.querySelector("#productGrid");
 
 function formatarPreco(valor){
@@ -23,7 +29,7 @@ async function carregarProdutos(){
 
       card.innerHTML = `
         <div class="card__img">
-          <img src="${produto.imagem}" alt="${produto.nome}">
+          <img src="${SITE_BASE}${produto.imagem}" alt="${produto.nome}">
         </div>
 
         <div class="card__body">
