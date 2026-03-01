@@ -133,7 +133,7 @@ app.get("/api/admin/resumo", exigirAdmin, async (req, res) => {
     res.status(500).json({ error: "Erro ao gerar resumo" });
   }
 });
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.post("/api/pedidos", async (req, res) => {
   try {
     const { pagamento, itens, total, nomeCliente, telefone } = req.body;
@@ -172,9 +172,7 @@ app.post("/api/pedidos", async (req, res) => {
     res.status(500).json({ error: "Erro ao criar pedido" });
   }
 });
-app.listen(PORT, () => {
-  console.log(`✅ API rodando em http://localhost:${PORT}`);
-});
+
 app.patch("/api/pedidos/:id/status", exigirAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id);
@@ -207,4 +205,7 @@ app.post("/api/admin/login", (req, res) => {
 
   // token simples (MVP)
   res.json({ token: process.env.ADMIN_TOKEN });
+});
+app.listen(PORT, () => {
+  console.log(`✅ API rodando na porta ${PORT}`);
 });
