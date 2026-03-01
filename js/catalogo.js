@@ -10,33 +10,30 @@ function formatarPreco(valor){
 
 async function carregarProdutos(){
   try {
-    const response = await fetch("http://localhost:3000/api/produtos");
+    const response = await fetch(`${API_URL}/api/produtos`);
     const produtos = await response.json();
 
     grid.innerHTML = "";
 
     produtos.forEach((produto) => {
-
       const card = document.createElement("article");
       card.classList.add("card");
 
       card.innerHTML = `
-  <div class="card__img">
-    <img src="${produto.imagem}" alt="${produto.nome}">
-  </div>
+        <div class="card__img">
+          <img src="${API_URL}${produto.imagem}" alt="${produto.nome}">
+        </div>
 
-  <div class="card__body">
-    <strong>${produto.nome}</strong>
-    <span class="muted">${produto.marca} • ${produto.volume}</span>
-    <span class="price">${formatarPreco(produto.preco)}</span>
-    <button class="btn btn--small">Adicionar ao carrinho</button>
-  </div>
-`;
+        <div class="card__body">
+          <strong>${produto.nome}</strong>
+          <span class="muted">${produto.marca} • ${produto.volume}</span>
+          <span class="price">${formatarPreco(produto.preco)}</span>
+          <button class="btn btn--small">Adicionar ao carrinho</button>
+        </div>
+      `;
 
       const botao = card.querySelector("button");
-botao.addEventListener("click", () => {
-  adicionarAoCarrinho(produto);
-});
+      botao.addEventListener("click", () => adicionarAoCarrinho(produto));
 
       grid.appendChild(card);
     });
