@@ -192,9 +192,7 @@ carregarResumo();
 carregarPedidos(filtroAtual);
 const logoutBtn = document.querySelector("#logoutBtn");
 
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("admin_token");
-    window.location.href = "login.html";
-  });
-}
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("admin_token");
+  window.location.href = "index.html";
+});

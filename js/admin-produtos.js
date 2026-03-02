@@ -266,8 +266,7 @@ logoutBtn?.addEventListener("click", () => {
   window.location.href = "login.html";
 });
 
-carregarProdutosAdmin().catch((e) => {
-  alert(e.message);
+logoutBtn?.addEventListener("click", () => {
   localStorage.removeItem("admin_token");
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 });
