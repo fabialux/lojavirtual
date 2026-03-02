@@ -241,15 +241,15 @@ app.post("/api/pedidos", async (req, res) => {
         // ✅ mantém a relação como "itens" no include/findMany,
         // mas na criação do Prisma o seu schema pode estar como "items" ou "itens".
         // Pelo seu print antigo estava "items". Se no seu schema for "itens", troque "items" por "itens" aqui.
-        items: {
-          create: itens.map((i) => ({
-            produtoId: Number(i.id),
-            nome: String(i.nome),
-            preco: Number(i.preco),
-            quantidade: Number(i.quantidade),
-            subtotal: Number(i.preco) * Number(i.quantidade),
-          })),
-        },
+        itens: {
+  create: itens.map((i) => ({
+    produtoId: Number(i.id),
+    nome: String(i.nome),
+    preco: Number(i.preco),
+    quantidade: Number(i.quantidade),
+    subtotal: Number(i.preco) * Number(i.quantidade),
+  })),
+},
       },
       include: { itens: true }, // ✅ retorna itens
     });
