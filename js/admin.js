@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:3000";
+const API_URL = window.location.hostname.includes("github.io")
+  ? "https://lojavirtual-production.up.railway.app"
+  : "http://localhost:3000";
 const token = localStorage.getItem("admin_token");
 if (!token) {
   window.location.href = "login.html";

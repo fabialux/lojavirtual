@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Produtos | Fábia D'Lux</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <button class="btn btn--outline btn--small" id="logoutBtn">Sair</button>
+
+    <div class="container header__content">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="Fábia D'Lux Importados">
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="carrinho.html">Carrinho (<span id="cartCount">0</span>)</a>
+        <a href="admin.html">Pedidos</a>
+        <a href="admin-produtos.html">Produtos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="adminTop">
+      <div>
+        <h1>Produtos</h1>
+        <p class="muted">Adicione e edite produtos do catálogo.</p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <input id="busca" placeholder="Buscar por nome/marca..." style="padding:10px; min-width:240px; max-width:100%;">
+          <select id="filtroAtivo" style="padding:10px;">
+            <option value="TODOS">Todos</option>
+            <option value="ATIVOS">Somente ativos</option>
+            <option value="INATIVOS">Somente inativos</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn--small" id="novoBtn">+ Novo produto</button>
+        <button class="btn btn--small" id="reloadBtn">Atualizar</button>
+      </div>
+    </div>
+
+    <div style="overflow:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th align="left">ID</th>
+            <th align="left">Imagem</th>
+            <th align="left">Nome</th>
+            <th align="left">Preço</th>
+            <th align="left">Ativo</th>
+            <th align="left">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="produtosTbody"></tbody>
+      </table>
+    </div>
+
+    <div id="formBox" style="display:none; margin-top:18px;">
+      <div class="adminCard" style="padding:16px;">
+        <div class="adminRow" style="align-items:flex-start;">
+          <div>
+            <div class="adminTitle" id="formTitle">Novo produto</div>
+            <div class="muted">Preencha os dados e salve.</div>
+          </div>
+          <button class="btn btn--outline btn--small" id="cancelarBtn">Fechar</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+          <input id="f_nome" placeholder="Nome">
+          <input id="f_marca" placeholder="Marca">
+          <input id="f_volume" placeholder="Volume (ex: 100ml)">
+          <input id="f_preco" placeholder="Preço (ex: 199.90)" inputmode="decimal">
+          <input id="f_imagem" placeholder='Imagem (ex: /assets/img/perfume1.jpg OU https://...)'>
+          <select id="f_ativo">
+            <option value="true">Ativo</option>
+            <option value="false">Inativo</option>
+          </select>
+        </div>
+
+        <textarea id="f_desc" placeholder="Descrição" style="width:100%; margin-top:10px; min-height:90px;"></textarea>
+
+        <img id="imgPreview" alt="" style="margin-top:10px; max-width:200px; border-radius:12px; border:1px solid #333; display:none;">
+
+        <div style="display:flex; gap:10px; margin-top:12px;">
+          <button class="btn btn--small" id="salvarBtn">Salvar</button>
+        </div>
+
+        <p class="muted" id="formMsg" style="margin-top:8px;"></p>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/shared.js"></script>
+  <script src="js/admin-produtos.js?v=1.0.0"></script>
+</body>
+</html>
