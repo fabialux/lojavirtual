@@ -35,3 +35,9 @@ function adicionarAoCarrinho(produto) {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
   atualizarContadorCarrinho();
 }
+(function mostrarLinksAdminSeLogado() {
+  const token = localStorage.getItem("admin_token");
+  document.querySelectorAll(".adminOnly").forEach((el) => {
+    el.style.display = token ? "inline-block" : "none";
+  });
+})();
