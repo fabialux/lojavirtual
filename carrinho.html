@@ -30,40 +30,73 @@
 </header>
 
   <main class="container section">
-  <h1>Seu Carrinho</h1>
-
-  <!-- PAGAMENTO -->
-  <div class="cartBox">
-    <label class="muted" for="paymentSelect">Forma de pagamento</label>
-    <select id="paymentSelect" class="input">
-      <option value="Pix">Pix</option>
-      <option value="Cartão">Cartão</option>
-      <option value="À vista">À vista</option>
-    </select>
+  <div class="checkoutHeader">
+    <div>
+      <h1 style="margin-bottom:6px;">Seu Carrinho</h1>
+      <p class="muted" style="margin:0;">Revise seus itens e finalize com segurança.</p>
+    </div>
   </div>
 
-    <!-- DADOS DO CLIENTE / ENTREGA -->
-  <div class="cartBox">
-    <label class="muted" for="nomeCliente">Nome</label>
-    <input id="nomeCliente" class="input" type="text" placeholder="Seu nome" />
+  <div class="checkoutGrid">
+    <!-- COLUNA ESQUERDA -->
+    <div>
+      <!-- PAGAMENTO -->
+      <div class="cartBox cartBox--premium">
+        <div class="cartBox__title">Pagamento</div>
+        <label class="muted" for="paymentSelect">Forma de pagamento</label>
+        <select id="paymentSelect" class="input">
+          <option value="Pix">Pix</option>
+          <option value="Cartão">Cartão</option>
+          <option value="À vista">À vista</option>
+        </select>
+      </div>
 
-    <label class="muted" for="telefone">Telefone</label>
-    <input id="telefone" class="input" type="tel" placeholder="(DDD) 9xxxx-xxxx" />
+      <!-- DADOS DO CLIENTE / ENTREGA -->
+      <div class="cartBox cartBox--premium">
+        <div class="cartBox__title">Entrega</div>
 
-    <label class="muted" for="endereco">Endereço de entrega</label>
-    <input id="endereco" class="input" type="text" placeholder="Rua, número, bairro, cidade, CEP" />
-  </div>
+        <div class="formGrid">
+          <div>
+            <label class="muted" for="nomeCliente">Nome</label>
+            <input id="nomeCliente" class="input" type="text" placeholder="Seu nome" />
+          </div>
 
-  <!-- ITENS -->
-  <div id="cartItems" class="cartItems"></div>
+          <div>
+            <label class="muted" for="telefone">Telefone</label>
+            <input id="telefone" class="input" type="tel" placeholder="(DDD) 9xxxx-xxxx" />
+          </div>
 
-  <!-- TOTAL -->
-  <h2 id="total"></h2>
+          <div class="span2">
+            <label class="muted" for="endereco">Endereço de entrega</label>
+            <input id="endereco" class="input" type="text" placeholder="Rua, número, bairro, cidade, CEP" />
+          </div>
+        </div>
+      </div>
 
-  <!-- AÇÕES -->
-  <div class="cartActions">
-    <button class="btn btn--outline" id="clearCartBtn">Limpar carrinho</button>
-    <button class="btn" id="whatsappBtn">Finalizar no WhatsApp</button>
+      <!-- ITENS -->
+      <div class="cartBox cartBox--premium">
+        <div class="cartBox__title">Itens</div>
+        <div id="cartItems" class="cartItems"></div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <aside class="checkoutAside">
+      <div class="cartBox cartBox--premium">
+        <div class="cartBox__title">Resumo</div>
+
+        <div id="total" class="totalPremium"></div>
+
+        <div class="cartActions cartActions--stack">
+          <button class="btn btn--outline" id="clearCartBtn">Limpar carrinho</button>
+          <button class="btn btn--gold" id="whatsappBtn">Finalizar no WhatsApp</button>
+        </div>
+
+        <div class="muted" style="margin-top:10px; font-size:13px;">
+          Ao finalizar, você será direcionado para o WhatsApp com os detalhes do pedido.
+        </div>
+      </div>
+    </aside>
   </div>
 </main>
   <script src="js/shared.js"></script>

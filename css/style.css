@@ -843,3 +843,118 @@ background: #000;
     grid-template-columns: 1fr !important;
   }
 }
+/* ===== CHECKOUT PREMIUM v2 (sobrescreve) ===== */
+
+.checkoutGrid{
+  display:grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 22px;
+  align-items:start;
+  margin-top: 14px;
+}
+
+.checkoutHeader{
+  margin-bottom: 10px;
+}
+
+.cartBox--premium{
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.cartBox__title{
+  font-weight: 900;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 12px;
+}
+
+/* Inputs mais “premium” */
+.cartBox--premium .input,
+.cartBox--premium select{
+  width: 100%;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  padding: 12px 12px;
+  border-radius: 12px;
+  outline: none;
+}
+
+.cartBox--premium .input:focus,
+.cartBox--premium select:focus{
+  border-color: rgba(198,169,93,0.55);
+  box-shadow: 0 0 0 3px rgba(198,169,93,0.12);
+}
+
+.formGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.formGrid label{
+  display:block;
+  margin-bottom: 6px;
+}
+
+.formGrid .span2{
+  grid-column: span 2;
+}
+
+/* Resumo mais colado e “forte” */
+.checkoutAside{
+  position: sticky;
+  top: 96px;
+}
+
+.totalPremium{
+  font-size: 22px;
+  font-weight: 950;
+  margin: 6px 0 14px;
+}
+
+.cartActions--stack{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Botão ouro mais elegante */
+.btn--gold{
+  border-radius: 14px;
+  padding: 14px 14px;
+  background: linear-gradient(135deg, #d6bd73, #a88c45);
+  color: #111;
+  font-weight: 950;
+}
+
+/* Itens ocupar mais espaço e ficar mais “clean” */
+#cartItems .cartItem{
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+/* Mobile */
+@media (max-width: 900px){
+  .checkoutGrid{
+    grid-template-columns: 1fr;
+  }
+  .checkoutAside{
+    position: static;
+  }
+  .formGrid{
+    grid-template-columns: 1fr;
+  }
+  .formGrid .span2{
+    grid-column: span 1;
+  }
+}
