@@ -51,21 +51,33 @@
       </div>
     </div>
 
-    <div style="overflow:auto;">
-      <table style="width:100%; border-collapse:collapse;">
-        <thead>
-          <tr>
-            <th align="left">ID</th>
-            <th align="left">Imagem</th>
-            <th align="left">Nome</th>
-            <th align="left">Preço</th>
-            <th align="left">Ativo</th>
-            <th align="left">Ações</th>
-          </tr>
-        </thead>
-        <tbody id="produtosTbody"></tbody>
-      </table>
-    </div>
+   <div style="overflow:auto; border:1px solid rgba(255,255,255,0.12); border-radius:14px;">
+  <table style="width:100%; border-collapse:separate; border-spacing:0; min-width:820px;">
+    <thead>
+      <tr style="background: rgba(255,255,255,0.06);">
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          ID
+        </th>
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          Imagem
+        </th>
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          Produto
+        </th>
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          Preço
+        </th>
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          Ativo
+        </th>
+        <th align="left" style="padding:12px 14px; font-weight:600; font-size:13px; letter-spacing:0.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.10);">
+          Ações
+        </th>
+      </tr>
+    </thead>
+    <tbody id="produtosTbody"></tbody>
+  </table>
+</div>
 
     <div id="formBox" style="display:none; margin-top:18px;">
       <div class="adminCard" style="padding:16px;">
@@ -86,7 +98,7 @@
 
   <label style="font-size:14px;">Imagem do produto</label>
   <input type="file" id="f_imagemFile" accept="image/*" style="margin-top:6px;">
-  <img id="previewImg" style="display:none; max-width:200px; margin-top:10px; border-radius:12px;">
+  <img id="previewImg" style="display:none; width:100%; max-width:320px; aspect-ratio:1/1; object-fit:cover; margin-top:10px; border-radius:14px; border:1px solid rgba(255,255,255,0.12);">
 </div>
 
 <textarea id="f_desc" placeholder="Descrição" style="grid-column: span 2; min-height:90px;"></textarea>
@@ -97,13 +109,9 @@
           </select>
         </div> 
 
-        <textarea id="f_desc" placeholder="Descrição" style="width:100%; margin-top:10px; min-height:90px;"></textarea>
-
-        <img id="imgPreview" alt="" style="margin-top:10px; max-width:200px; border-radius:12px; border:1px solid #333; display:none;">
-
-        <div style="display:flex; gap:10px; margin-top:12px;">
-          <button class="btn btn--small" id="salvarBtn">Salvar</button>
-        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+  <button class="btn btn--small" id="salvarBtn">Salvar</button>
+</div>
 
         <p class="muted" id="formMsg" style="margin-top:8px;"></p>
       </div>

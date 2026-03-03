@@ -202,18 +202,27 @@ function render() {
 
   lista.forEach((p) => {
     const tr = document.createElement("tr");
+    tr.style.borderBottom = "1px solid rgba(255,255,255,0.08)";
+
+tr.addEventListener("mouseenter", () => {
+  tr.style.background = "rgba(255,255,255,0.04)";
+});
+
+tr.addEventListener("mouseleave", () => {
+  tr.style.background = "transparent";
+});
     tr.innerHTML = `
-      <td style="padding:10px;">${p.id}</td>
-      <td style="padding:10px;">
+      <td style="padding:12px 14px;">${p.id}</td>
+      <td style="padding:12px 14px;">
         <img src="${resolverImagem(p.imagem)}" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid #333;">
       </td>
-      <td style="padding:10px;">
+      <td style="padding:12px 14px;">
         <div><strong>${p.nome}</strong></div>
         <div class="muted">${p.marca} • ${p.volume}</div>
       </td>
-      <td style="padding:10px;">${formatarPreco(p.preco)}</td>
-      <td style="padding:10px;">${p.ativo ? "SIM" : "NÃO"}</td>
-      <td style="padding:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <td style="padding:12px 14px;">${formatarPreco(p.preco)}</td>
+      <td style="padding:12px 14px;;">${p.ativo ? "SIM" : "NÃO"}</td>
+      <td style="padding:12px 14px;; display:flex; gap:8px; flex-wrap:wrap;">
         <button class="btn btn--outline btn--small" data-edit="${p.id}">Editar</button>
         <button class="btn btn--outline btn--small" data-price="${p.id}">Preço</button>
         <button class="btn btn--outline btn--small" data-toggle="${p.id}">
@@ -267,48 +276,62 @@ async function toggleAtivo(p) {
 
 async function salvarProduto() {
   formMsg.textContent = "";
+  setSalvarLoading(true, "Salvando...");
 
-  // ✅ se o admin selecionou um arquivo, sobe pro Cloudinary primeiro
-  let imagemUrl = null;
-  const file = f_imagemFile?.files?.[0];
-  if (file) {
-    imagemUrl = await uploadImagem(file);
+  try {
+    // ✅ se o admin selecionou um arquivo, sobe pro Cloudinary primeiro
+    let imagemUrl = null;
+    const file = f_imagemFile?.files?.[0];
+
+    if (file) {
+      setSalvarLoading(true, "Enviando imagem...");
+      imagemUrl = await uploadImagem(file);
+      setSalvarLoading(true, "Salvando...");
+    }
+
+    const payload = {
+      nome: f_nome.value.trim(),
+      marca: f_marca.value.trim(),
+      volume: f_volume.value.trim(),
+      preco: Number(String(f_preco.value).replace(",", ".")),
+      imagem: imagemUrl || imagemAtual,
+      descricao: f_desc.value.trim(),
+      ativo: f_ativo.value === "true",
+    };
+
+    if (!payload.nome) throw new Error("Nome é obrigatório.");
+    if (!payload.marca) throw new Error("Marca é obrigatória.");
+    if (!payload.volume) throw new Error("Volume é obrigatório.");
+    if (!Number.isFinite(payload.preco)) throw new Error("Preço inválido.");
+
+    const url = editId
+      ? `${API_URL}/api/admin/produtos/${editId}`
+      : `${API_URL}/api/admin/produtos`;
+
+    const method = editId ? "PATCH" : "POST";
+
+    const resp = await fetch(url, {
+      method,
+      headers: headersAuth(),
+      body: JSON.stringify(payload),
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(data.error || "Erro ao salvar");
+
+    fecharForm();
+    await carregarProdutosAdmin();
+  } finally {
+    setSalvarLoading(false);
   }
-
-  const payload = {
-    nome: f_nome.value.trim(),
-    marca: f_marca.value.trim(),
-    volume: f_volume.value.trim(),
-    preco: Number(String(f_preco.value).replace(",", ".")),
-    imagem: imagemUrl || imagemAtual,
-    descricao: f_desc.value.trim(),
-    ativo: f_ativo.value === "true",
-  };
-
-  if (!payload.nome) throw new Error("Nome é obrigatório.");
-  if (!payload.marca) throw new Error("Marca é obrigatória.");
-  if (!payload.volume) throw new Error("Volume é obrigatório.");
-  if (!Number.isFinite(payload.preco)) throw new Error("Preço inválido.");
-
-  const url = editId
-    ? `${API_URL}/api/admin/produtos/${editId}`
-    : `${API_URL}/api/admin/produtos`;
-
-  const method = editId ? "PATCH" : "POST";
-
-  const resp = await fetch(url, {
-    method,
-    headers: headersAuth(),
-    body: JSON.stringify(payload),
-  });
-
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) throw new Error(data.error || "Erro ao salvar");
-
-  fecharForm();
-  await carregarProdutosAdmin();
 }
+function setSalvarLoading(isLoading, texto = "Salvar") {
+  if (!salvarBtn) return;
 
+  salvarBtn.disabled = isLoading;
+  salvarBtn.style.opacity = isLoading ? "0.7" : "1";
+  salvarBtn.textContent = isLoading ? texto : "Salvar";
+}
 // eventos
 reloadBtn.addEventListener("click", () => carregarProdutosAdmin());
 novoBtn.addEventListener("click", () => abrirFormNovo());
