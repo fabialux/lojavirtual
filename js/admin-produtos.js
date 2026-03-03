@@ -20,11 +20,17 @@ const f_nome = document.getElementById("f_nome");
 const f_marca = document.getElementById("f_marca");
 const f_volume = document.getElementById("f_volume");
 const f_preco = document.getElementById("f_preco");
-const f_imagem = document.getElementById("f_imagem");
+
+// ✅ NOVO: input file (substitui f_imagem)
+const f_imagemFile = document.getElementById("f_imagemFile");
+
 const f_desc = document.getElementById("f_desc");
 const f_ativo = document.getElementById("f_ativo");
 
-const imgPreview = document.getElementById("imgPreview");
+// ✅ Preview (aceita os 2 ids pra não quebrar seu HTML)
+const previewImg =
+  document.getElementById("previewImg") || document.getElementById("imgPreview");
+
 const salvarBtn = document.getElementById("salvarBtn");
 const cancelarBtn = document.getElementById("cancelarBtn");
 
@@ -32,6 +38,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 let produtosCache = [];
 let editId = null;
+let imagemAtual = "/assets/img/perfume1.jpg";
 
 function headersAuth() {
   return {
@@ -62,6 +69,41 @@ function resolverImagem(img) {
   return img;
 }
 
+// ✅ Preview do arquivo escolhido (upload)
+function atualizarPreviewArquivo() {
+  const file = f_imagemFile?.files?.[0];
+
+  if (!previewImg) return;
+
+  if (!file) {
+    previewImg.style.display = "none";
+    previewImg.src = "";
+    return;
+  }
+
+  previewImg.src = URL.createObjectURL(file);
+  previewImg.style.display = "block";
+}
+
+// ✅ Upload para Cloudinary via backend
+async function uploadImagem(file) {
+  const formData = new FormData();
+  formData.append("imagem", file);
+
+  const resp = await fetch(`${API_URL}/api/admin/upload`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) throw new Error(data.error || "Erro ao enviar imagem");
+
+  return data.url;
+}
+
 function abrirFormNovo() {
   editId = null;
   formTitle.textContent = "Novo produto";
@@ -72,11 +114,15 @@ function abrirFormNovo() {
   f_marca.value = "";
   f_volume.value = "100ml";
   f_preco.value = "0";
-  f_imagem.value = "/assets/img/perfume1.jpg";
   f_desc.value = "";
   f_ativo.value = "true";
 
-  atualizarPreview();
+  // ✅ limpa arquivo e preview
+  if (f_imagemFile) f_imagemFile.value = "";
+  if (previewImg) {
+    previewImg.style.display = "none";
+    previewImg.src = "";
+  }
 }
 
 function abrirFormEditar(p) {
@@ -89,26 +135,31 @@ function abrirFormEditar(p) {
   f_marca.value = p.marca || "";
   f_volume.value = p.volume || "";
   f_preco.value = String(p.preco ?? 0);
-  f_imagem.value = p.imagem || "";
   f_desc.value = p.descricao || "";
   f_ativo.value = String(!!p.ativo);
 
-  atualizarPreview();
+  // ✅ guarda a imagem atual pra não trocar sem querer
+  imagemAtual = p.imagem || "/assets/img/perfume1.jpg";
+
+  // ✅ mostra imagem atual do produto no preview
+  if (previewImg) {
+    const url = resolverImagem(p.imagem || "");
+    if (url) {
+      previewImg.src = url;
+      previewImg.style.display = "block";
+    } else {
+      previewImg.style.display = "none";
+      previewImg.src = "";
+    }
+  }
+
+  // ✅ limpa arquivo selecionado (se trocar, vai subir nova)
+  if (f_imagemFile) f_imagemFile.value = "";
 }
 
 function fecharForm() {
   formBox.style.display = "none";
   formMsg.textContent = "";
-}
-
-function atualizarPreview() {
-  const url = resolverImagem(f_imagem.value.trim());
-  if (!url) {
-    imgPreview.style.display = "none";
-    return;
-  }
-  imgPreview.src = url;
-  imgPreview.style.display = "block";
 }
 
 async function carregarProdutosAdmin() {
@@ -217,12 +268,19 @@ async function toggleAtivo(p) {
 async function salvarProduto() {
   formMsg.textContent = "";
 
+  // ✅ se o admin selecionou um arquivo, sobe pro Cloudinary primeiro
+  let imagemUrl = null;
+  const file = f_imagemFile?.files?.[0];
+  if (file) {
+    imagemUrl = await uploadImagem(file);
+  }
+
   const payload = {
     nome: f_nome.value.trim(),
     marca: f_marca.value.trim(),
     volume: f_volume.value.trim(),
     preco: Number(String(f_preco.value).replace(",", ".")),
-    imagem: f_imagem.value.trim(),
+    imagem: imagemUrl || imagemAtual,
     descricao: f_desc.value.trim(),
     ativo: f_ativo.value === "true",
   };
@@ -259,13 +317,16 @@ salvarBtn.addEventListener("click", () => salvarProduto().catch((e) => (formMsg.
 
 buscaEl.addEventListener("input", render);
 filtroAtivoEl.addEventListener("change", render);
-f_imagem.addEventListener("input", atualizarPreview);
+
+// ✅ Preview quando escolher arquivo
+f_imagemFile?.addEventListener("change", atualizarPreviewArquivo);
 
 logoutBtn?.addEventListener("click", () => {
   localStorage.removeItem("admin_token");
   window.location.href = "login.html";
 });
 
+// Mantive como você tinha (mesmo estando duplicado)
 logoutBtn?.addEventListener("click", () => {
   localStorage.removeItem("admin_token");
   window.location.href = "index.html";

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Teste Upload</h2>
+
+<input type="file" id="fileInput" />
+<button onclick="enviar()">Enviar</button>
+
+<script>
+async function enviar() {
+  const file = document.getElementById("fileInput").files[0];
+  if (!file) return alert("Escolha uma imagem");
+
+  const formData = new FormData();
+  formData.append("imagem", file);
+
+  const resp = await fetch("http://localhost:3000/api/admin/upload", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer timao2006"
+    },
+    body: formData
+  });
+
+  const data = await resp.json();
+  console.log(data);
+  alert(JSON.stringify(data));
+}
+</script>
+
+</body>
+</html>

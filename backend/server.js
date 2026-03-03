@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const path = require("path");
-
+const uploadRoute = require("./upload");
 const app = express();
 const prisma = new PrismaClient();
 
@@ -27,6 +27,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use("/api/admin/upload", exigirAdmin, uploadRoute);
 
 // Serve imagens do seu projeto (pasta assets na raiz)
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
@@ -302,3 +304,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ API rodando na porta ${PORT}`);
 });
+
+
+

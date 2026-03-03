@@ -82,12 +82,20 @@
           <input id="f_marca" placeholder="Marca">
           <input id="f_volume" placeholder="Volume (ex: 100ml)">
           <input id="f_preco" placeholder="Preço (ex: 199.90)" inputmode="decimal">
-          <input id="f_imagem" placeholder='Imagem (ex: /assets/img/perfume1.jpg OU https://...)'>
+          <div style="grid-column: span 2;">
+
+  <label style="font-size:14px;">Imagem do produto</label>
+  <input type="file" id="f_imagemFile" accept="image/*" style="margin-top:6px;">
+  <img id="previewImg" style="display:none; max-width:200px; margin-top:10px; border-radius:12px;">
+</div>
+
+<textarea id="f_desc" placeholder="Descrição" style="grid-column: span 2; min-height:90px;"></textarea>
+
           <select id="f_ativo">
             <option value="true">Ativo</option>
             <option value="false">Inativo</option>
           </select>
-        </div>
+        </div> 
 
         <textarea id="f_desc" placeholder="Descrição" style="width:100%; margin-top:10px; min-height:90px;"></textarea>
 
