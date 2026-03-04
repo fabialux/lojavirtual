@@ -300,10 +300,50 @@ app.post("/api/admin/login", (req, res) => {
   res.json({ token: process.env.ADMIN_TOKEN });
 });
 
+app.get("/api/promocao", async (req, res) => {
+  const promocao = await prisma.promocao.findFirst({
+    where: { ativo: true }
+  });
+  res.json(promocao);
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ API rodando na porta ${PORT}`);
 });
+
+app.get("/api/promocao", async (req, res) => {
+
+const promocao = await prisma.promocao.findFirst({
+where: { ativo: true }
+})
+
+res.json(promocao)
+
+})
+
+app.post("/api/promocao", async (req, res) => {
+
+const { titulo, descricao, botao, link } = req.body
+
+const promocao = await prisma.promocao.upsert({
+
+where: { id: 1 },
+
+update: { titulo, descricao, botao, link },
+
+create: {
+titulo,
+descricao,
+botao,
+link
+}
+
+})
+
+res.json(promocao)
+
+})
 
 
 

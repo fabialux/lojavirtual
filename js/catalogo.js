@@ -1,6 +1,4 @@
-const API_URL = window.location.hostname.includes("github.io")
-  ? "https://lojavirtual-production.up.railway.app"
-  : "http://localhost:3000";
+
 
 // ✅ base correta para imagens no GitHub Pages
 const SITE_BASE = window.location.hostname.includes("github.io")
@@ -35,7 +33,7 @@ function resolverImagem(img) {
 
 async function carregarProdutos() {
   try {
-    const response = await fetch(`${API_URL}/api/produtos`);
+    const response = await fetch(`${window.API_URL}/api/produtos`);
     const produtos = await response.json();
 
     grid.innerHTML = "";
@@ -59,8 +57,16 @@ async function carregarProdutos() {
           </div>
 
           <div class="produto-actions">
-            <button class="produto-btn">Adicionar ao carrinho</button>
-          </div>
+
+  <a href="produto.html?id=${produto.id}" class="produto-btn produto-btn-outline">
+    Ver produto
+  </a>
+
+  <button class="produto-btn">
+    Adicionar ao carrinho
+  </button>
+
+</div>
         </div>
       `;
 

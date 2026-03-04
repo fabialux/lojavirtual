@@ -42,3 +42,12 @@ model PedidoItem {
 
   pedido     Pedido  @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
 }
+
+model Promocao {
+  id        Int     @id @default(autoincrement())
+  titulo    String
+  descricao String
+  botao     String
+  link      String
+  ativo     Boolean @default(true)
+}
