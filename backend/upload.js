@@ -41,9 +41,19 @@ router.post("/", upload.single("imagem"), async (req, res) => {
       public_id: result.public_id,
     });
   } catch (error) {
-    console.error("Erro upload:", error);
-    res.status(500).json({ error: "Erro ao enviar imagem" });
-  }
+  console.error("Erro upload:", error);
+
+  const msg =
+    error?.message ||
+    error?.error?.message ||
+    error?.toString?.() ||
+    "Erro ao enviar imagem";
+
+  res.status(500).json({
+    error: "Erro ao enviar imagem",
+    details: msg,
+  });
+}
 });
 
 module.exports = router;
