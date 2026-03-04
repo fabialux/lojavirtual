@@ -1,3 +1,23 @@
+const SITE_BASE = window.location.hostname.includes("github.io")
+  ? `https://${window.location.host}/lojavirtual`
+  : "";
+
+function isUrlCompleta(s) {
+  return typeof s === "string" && (s.startsWith("http://") || s.startsWith("https://"));
+}
+
+function resolverImagem(img) {
+  if (!img) return "";
+  if (isUrlCompleta(img)) return img; // Cloudinary etc.
+
+  // se vier "/assets/..." no GitHub Pages precisa do "/lojavirtual"
+  if (window.location.hostname.includes("github.io") && img.startsWith("/")) {
+    return `${SITE_BASE}${img}`;
+  }
+
+  return img; // local ou caminho relativo
+}
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -34,7 +54,7 @@ async function carregarProduto() {
     document.getElementById("produtoPreco").innerText = formatBRL(p.preco);
 
     const img = document.getElementById("produtoImg");
-    img.src = p.imagem;
+    img.src = resolverImagem(p.imagem);
     img.alt = p.nome || "Produto";
 
     // SEO básico dinâmico
