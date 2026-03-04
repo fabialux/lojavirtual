@@ -20,15 +20,25 @@ function isUrlCompleta(s) {
 
 function resolverImagem(img) {
   if (!img) return "";
-  if (isUrlCompleta(img)) return img; // Cloudinary etc.
 
-  // se for /assets/... no GitHub Pages precisa do /lojavirtual
+  // Cloudinary / URL completa
+  if (isUrlCompleta(img)) return img;
+
+  let path = img.trim();
+
+  // remove "./"
+  if (path.startsWith("./")) path = path.slice(2);
+
+  // garante que começa com "/"
+  if (!path.startsWith("/")) path = "/" + path;
+
+  // GitHub Pages: precisa de /lojavirtual na frente
   if (window.location.hostname.includes("github.io")) {
-    return `${SITE_BASE}${img}`;
+    return `https://${window.location.host}/lojavirtual${path}`;
   }
 
-  // local (abrindo via Live Server) funciona direto
-  return img;
+  // local
+  return path;
 }
 
 async function carregarProdutos() {
