@@ -4,7 +4,6 @@ const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const path = require("path");
 const uploadRoute = require("./upload");
-const cors = require("cors");
 const app = express();
 const prisma = new PrismaClient();
 
@@ -28,6 +27,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/api/admin/upload", exigirAdmin, uploadRoute);
 
